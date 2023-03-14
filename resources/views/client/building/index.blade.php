@@ -34,6 +34,7 @@
             <div class="page-section">
 
                 <div class="page-content">
+                    <div style="margin: 10px 0">Количество:  @if( isset($buildings)) {{$buildings->count()}} @else 0 @endif  </div>
                     <h1 class="visuallyhidden">Новостройки</h1>
                     <div class="page-loop__wrapper loop tab-content tab-content__active">
                         @if( isset($buildings) && $buildings->count() )
