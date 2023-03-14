@@ -9,6 +9,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return '<a href="/onepix.local/buildings/">Новостройки</a>';
+        return '<a href="/buildings/">Новостройки</a>';
     }
 }
