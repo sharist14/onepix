@@ -7,9 +7,9 @@
 	<meta name="robots" content="noindex">
 	<title>Metro City | Новостройки</title>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=f7f5866c-fcab-4da8-94d7-cdbdb39c7d22&lang=ru_RU"></script>
-    <link href="{{ asset('/onepix.local/public/fonts/icomoon/icon-font.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/onepix.local/public/libs/animate/animate.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/onepix.local/public/css/style.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/fonts/icomoon/icon-font.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/libs/animate/animate.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/css/style.min.css') }}" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -17,11 +17,11 @@
 
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="{{ asset('/onepix.local/public/libs/bootstrap/js/popper.min.js') }}" defer></script>
-    <script src="{{ asset('/onepix.local/public/libs/bootstrap/js/bootstrap.min.js') }}" defer></script>
-    <script src="{{ asset('/onepix.local/public/libs/ofi/ofi.min.js') }}" defer></script>
-    <script src="{{ asset('/onepix.local/public/libs/wowjs/wow.min.js') }}" defer></script>
-    <script src="{{ asset('/onepix.local/public/js/scripts.js') }}" defer></script>
+    <script src="{{ asset('/libs/bootstrap/js/popper.min.js') }}" defer></script>
+    <script src="{{ asset('/libs/bootstrap/js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ asset('/libs/ofi/ofi.min.js') }}" defer></script>
+    <script src="{{ asset('/libs/wowjs/wow.min.js') }}" defer></script>
+    <script src="{{ asset('/js/scripts.js') }}" defer></script>
 
 
 </body>
