@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         Builder::insert( $data_builder->toArray() );
 
         // Класс жилья
-        $data_housing = [["title" => "Эконом"], ["title" => "Комфорт"], ["title" => "Бизнес"], ["title" => "Элит"]];
+        $data_housing = [["id" => 1, "title" => "Эконом"], ["id" => 2, "title" => "Комфорт"], ["id" => 3, "title" => "Бизнес"], ["id" => 4, "title" => "Элит"]];
         Housing::insert( $data_housing );
 
         // Основные опции
