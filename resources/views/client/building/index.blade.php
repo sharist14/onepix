@@ -82,12 +82,12 @@
                                 @endforeach
                             </ul>
 
-                            <div class="show-more">
-                                <button class="show-more__button">
-                                    <span class="show-more__button-icon"></span>
-                                    Показать еще
-                                </button>
-                            </div>
+                            {{--<div class="show-more">--}}
+                                {{--<button class="show-more__button">--}}
+                                    {{--<span class="show-more__button-icon"></span>--}}
+                                    {{--Показать еще--}}
+                                {{--</button>--}}
+                            {{--</div>--}}
                         @else
                             <div class="alert alert-warning">
                                 Отсутствуют недвижимость по выбранным фильтрам.

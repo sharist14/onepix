@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class BuildingController extends BaseController
 {
-    public $on_page = 20;
+    public $on_page = 50;
 
     public function index(Request $request)
     {
