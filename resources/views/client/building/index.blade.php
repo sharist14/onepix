@@ -311,6 +311,10 @@
                                         <a href="#additional_collapse" class="page-filter__category-more"
                                            data-toggle="collapse" data-count="{{$collapse_cnt}}"
                                            role="button">Показать еще ({{$collapse_cnt}})</a>
+
+                                        @if(isset($buildings))
+                                        {{ $buildings->links() }}
+                                        @endif
                                     </div>
 
                                 </div>
