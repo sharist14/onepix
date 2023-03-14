@@ -13,13 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
-    dd('test');
-});
 
 use App\Http\Controllers\Client;
-Route::prefix('onepix.local')->group(function() {
-    Route::get('/', [Client\IndexController::class, 'index']);
-
-    Route::match(['get', 'post'],'/buildings/', [Client\BuildingController::class, 'index'])->name('client.building.index');
-});
+Route::get('/', [Client\IndexController::class, 'index']);
+Route::match(['get', 'post'],'/buildings/', [Client\BuildingController::class, 'index'])->name('client.building.index');
