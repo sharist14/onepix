@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
 
 
         // Объекты
-        Building::factory()->count(10)->create();
+        Building::factory()->count(50)->create();
 
         // Присваиваем объектам главные опции
         Building::all()->each(function ($building) use ($masteroptions) {
