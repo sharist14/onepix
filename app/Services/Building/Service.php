@@ -124,7 +124,7 @@ class Service
         }
 
 
-        $result = $query->get()->paginate($on_page);
+        $result = $query->get()->take($on_page);
 
         return $result;
     }
