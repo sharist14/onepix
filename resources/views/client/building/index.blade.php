@@ -52,7 +52,7 @@
 
                                             <div class="page-loop__item-image">
 
-                                                <img src="/onepix.local/public/img/preview/{{$building->image_preview}}" alt="">
+                                                <img src="/img/preview/{{$building->image_preview}}" alt="">
 
                                                 <div class="page-loop__item-badges">
                                                     <span class="badge">Услуги 0%</span>
