@@ -32,10 +32,4 @@ class BuildingController extends BaseController
         return view('client.building.index', $data);
     }
 
-
-
-    public function show()
-    {
-        return view('client.building.show');
-    }
 }
