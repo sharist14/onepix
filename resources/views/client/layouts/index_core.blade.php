@@ -10,13 +10,14 @@
     <link href="{{ asset('/fonts/icomoon/icon-font.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/libs/animate/animate.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/style.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/css/custom.css') }}" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 </head>
 <body>
     @yield('content')
 
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="{{ asset('/libs/bootstrap/js/popper.min.js') }}" defer></script>
     <script src="{{ asset('/libs/bootstrap/js/bootstrap.min.js') }}" defer></script>
     <script src="{{ asset('/libs/ofi/ofi.min.js') }}" defer></script>
