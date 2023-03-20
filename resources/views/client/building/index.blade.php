@@ -34,11 +34,11 @@
             <div class="page-section">
 
                 <div class="page-content">
-                    <div style="margin: 10px 0">Количество:  @if( isset($buildings)) {{$buildings->count()}} @else 0 @endif  </div>
+                    <div style="margin: 10px 0" >Количество:  <span id="cnt_rendered">@if( isset($buildings)) {{$buildings->count()}} @else 0 @endif</span>  </div>
                     <h1 class="visuallyhidden">Новостройки</h1>
                     <div class="page-loop__wrapper loop tab-content tab-content__active">
                         @if( isset($buildings) && $buildings->count() )
-                            <ul class="page-loop with-filter">
+                            <ul id="building_list" class="page-loop with-filter">
                                 @foreach($buildings as $building)
                                     <li class="page-loop__item wow animate__animated animate__fadeInUp"
                                         data-wow-duration="0.8s">
@@ -68,6 +68,12 @@
 
                                                 <p class="page-text">Срок сдачи: {{ ceil(date('n', strtotime($building->start_time)) / 3) }} кв. {{ date('Y', strtotime($building->start_time)) }} г.</p>
                                                 <p class="page-text">Класс жилья: {{ $building->housingName->title }}</p>
+                                                <p class="page-text"> <span class="hint_masteropt" title="@foreach($building->getMasteroptions as $opt)- {{$opt->title}}&#013;@endforeach">Основные опции</span> </p>
+
+                                                <p class="page-text"> <span class="hint_secondopt" title="@foreach($building->getSecondoptions as $opt)- {{$opt->title}}&#013;@endforeach">Доп. опции</span> </p>
+
+                                                <p>
+                                                </p>
 
                                                 <div class="page-text to-metro">
                                                     <span class="icon-metro icon-metro--red"></span>
@@ -81,14 +87,16 @@
                                         </a>
                                     </li>
                                 @endforeach
+
                             </ul>
 
-                            {{--<div class="show-more">--}}
-                                {{--<button class="show-more__button">--}}
-                                    {{--<span class="show-more__button-icon"></span>--}}
-                                    {{--Показать еще--}}
-                                {{--</button>--}}
-                            {{--</div>--}}
+                            <div class="show-more">
+                                <button id="load_more" class="show-more__button">
+                                    <span class="show-more__button-icon"></span>
+                                    Показать еще
+                                </button>
+                            </div>
+
                         @else
                             <div class="alert alert-warning">
                                 Отсутствуют недвижимость по выбранным фильтрам.
@@ -358,4 +366,43 @@
         </div>
 
     </main>
+
+<script>
+    $(function(){
+        var page = 1;
+        $("#load_more").on("click", function (e) {
+            var form = $('#page-filter');
+            var actionUrl = form.attr('action');
+            page++;
+
+            $.ajax({
+                type: "POST",
+                url: actionUrl + '?page=' + page,
+                data: form.serialize(),
+                success: function(data)
+                {
+                    console.log(data);
+                    if(data.cnt > 0){
+                        $('#building_list').append(data.html);
+
+                        cnt_rendered(data.cnt);
+                    } else {
+                        hide_loadmore();
+                    }
+                }
+            });
+        });
+    });
+
+    function hide_loadmore(){
+        $('.show-more').hide();
+    }
+
+    function cnt_rendered(cnt = 0){
+        var old_cnt = parseInt($('#cnt_rendered').text());
+        var new_cnt = parseInt(cnt);
+
+        $('#cnt_rendered').text(old_cnt + new_cnt);
+    }
+</script>
 @endsection

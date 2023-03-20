@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class BuildingController extends BaseController
 {
-    public $on_page = 50;
 
     public function index(Request $request)
     {
@@ -23,7 +22,15 @@ class BuildingController extends BaseController
             $params = [];
         }
 
-        $data['buildings'] = $this->service->getFilterData($params, $this->on_page);
+
+        $data['buildings'] = $this->service->getFilterData($params);
+
+        if ($request->ajax()) {
+            $ajax_data['cnt'] = sizeof($data['buildings']);
+            $ajax_data['html'] = view('client.building.load_more', $data)->render();
+            return $ajax_data;
+        }
+
         $data['filter'] = $params;
         $data['master_options'] = Masteroption::get();
         $data['second_options'] = Secondoption::get();

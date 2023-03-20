@@ -5,11 +5,15 @@ use App\Models\Building;
 use App\Models\BuildingMasteroption;
 use App\Models\BuildingSecondoption;
 use App\Models\Masteroption;
+use App\Models\Secondoption;
 use Illuminate\Support\Facades\DB;
 
 class Service
 {
-    public function getFilterData($params, $on_page = 5)
+    public $on_page = 5;
+
+
+    public function getFilterData($params)
     {
         $query = Building::query();
 
@@ -107,15 +111,40 @@ class Service
 
         // Основные опции
         if( isset($params['master_opt']) ){
-            $buildings_ids_m = BuildingMasteroption::whereIn('masteroption_id', $params['master_opt'])->get()->pluck('building_id')->toArray();
-            $query->whereIn("id", array_unique($buildings_ids_m));
+            $ids_m = [];
+            $opts_m = Masteroption::whereIn('id', $params['master_opt'])->get();
+            foreach($opts_m as $opt){
+                $temp_ids = $opt->getBuildings->pluck('id')->toArray();
+                if(!$ids_m){
+                    $ids_m = $temp_ids;
+                } else {
+                    $ids_m = array_intersect($ids_m, $temp_ids);
+                }
+            }
+
+            $query->whereIn("id", array_unique($ids_m));
         }
 
 
         // Доп опции
         if( isset($params['second_opt']) ){
-            $buildings_ids_s = BuildingSecondoption::whereIn('secondoption_id', $params['second_opt'])->get()->pluck('building_id')->toArray();
-            $query->whereIn("id", array_unique($buildings_ids_s));
+//            $buildings_ids_s = BuildingSecondoption::whereIn('secondoption_id', $params['second_opt'])->get()->pluck('building_id')->toArray();
+//            $query->whereIn("id", array_unique($buildings_ids_s));
+
+            $ids_s = [];
+            $opts_s = Secondoption::whereIn('id', $params['second_opt'])->get();
+
+
+            foreach($opts_s as $opt){
+                $temp_ids = $opt->getBuildings->pluck('id')->toArray();
+                if(!$ids_s){
+                    $ids_s = $temp_ids;
+                } else {
+                    $ids_s = array_intersect($ids_s, $temp_ids);
+                }
+            }
+
+            $query->whereIn("id", array_unique($ids_s));
         }
 
         // Услуги 0%
@@ -124,7 +153,10 @@ class Service
         }
 
 
-        $result = $query->get()->take($on_page);
+//        $result = $query->get()->take($on_page);
+//        $result = $query->paginate($on_page);
+//        $result = $query->simplePaginate($this->on_page);
+        $result = $query->paginate($this->on_page);
 
         return $result;
     }
