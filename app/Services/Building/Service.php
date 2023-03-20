@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Service
 {
-    public $on_page = 5;
+    public $on_page = 10;
 
 
     public function getFilterData($params)
