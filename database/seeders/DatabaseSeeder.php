@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         $masteroptions = Masteroption::all();
 
         // Дополнительные опции
-        $data_secondoption = [["title" => "Двор без машин"], ["title" => "Высокие потолки"], ["title" => "Есть кладовые"], ["title" => "Панорамные окна"], ["title" => "Малоэтажный (<10 этажей)"], ["title" => "Панорамные окна"], ["title" => "Малоэтажный (<10 этажей)"], ["title" => "Двор без машин"], ["title" => "Высокие потолки"], ["title" => "Есть кладовые"]];
+        $data_secondoption = [["title" => "Двор без машин"], ["title" => "Высокие потолки"], ["title" => "Есть кладовые"], ["title" => "Панорамные окна"], ["title" => "Малоэтажный (<10 этажей)"], ["title" => "Есть парковка"], ["title" => "Грузовой лифт"], ["title" => "От собственника"], ["title" => "Есть лоджия"], ["title" => "Транспортная развязка"]];
         Secondoption::insert( $data_secondoption );
         $secondoptions = Secondoption::all();
 
