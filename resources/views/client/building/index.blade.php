@@ -18,7 +18,7 @@
                 <div class="page-content">
                     <div style="margin: 10px 0" >Количество:  <span id="cnt_rendered">@if( isset($buildings)) {{$buildings->count()}} @else 0 @endif</span>  </div>
                     <h1 class="visuallyhidden">Новостройки</h1>
-                    <div class="page-loop__wrapper loop tab-content tab-content__active">
+                    <div class="building_block page-loop__wrapper loop tab-content tab-content__active">
                         @if( isset($buildings) && $buildings->count() )
                             <ul id="building_list" class="page-loop with-filter">
                                 @foreach($buildings as $building)
@@ -80,7 +80,7 @@
                             </div>
 
                         @else
-                            <div class="alert alert-warning">
+                            <div class="no_buildings alert alert-warning">
                                 Отсутствуют недвижимость по выбранным фильтрам.
                             </div>
                         @endif
@@ -325,7 +325,7 @@
                                     фильтры
                                 </button>
 
-                                <button class="button w-100" type="reset" id="reset_filter" onclick="location.href='{{ route("client.building.index") }}';">Сбросить фильтры
+                                <button class="button w-100" type="reset" id="reset_filter">Сбросить фильтры
                                     <svg width="9" height="8" viewBox="0 0 9 8" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -349,7 +349,56 @@
 <script>
     $(function(){
         var page = 1;
-        $("#load_more").on("click", function (e) {
+
+        $("#page-filter").submit(function(e) {
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            var form = $(this);
+            var actionUrl = form.attr('action');
+            page = 1;
+
+            $.ajax({
+                type: "POST",
+                url: actionUrl + '?page=' + page,
+                data: form.serialize(),
+                success: function(data)
+                {
+                    $('#building_list').empty();
+
+                    if(data.cnt > 0){
+                        $('#building_list').append(data.html);
+                    }
+
+                    cnt_rendered(data.cnt);
+                }
+            });
+        });
+
+
+        $("#reset_filter").on("click", function () {
+            var form = $('#page-filter');
+            var actionUrl = form.attr('action');
+            page = 1;
+
+            $.ajax({
+                type: "GET",
+                url: actionUrl + '?page=' + page,
+                success: function(data)
+                {
+                    $('#building_list').empty();
+
+                    if(data.cnt > 0){
+                        $('#building_list').append(data.html);
+                    }
+
+                    cnt_rendered(data.cnt);
+
+                    reset_filter();
+                }
+            });
+        });
+
+
+        $("#load_more").on("click", function () {
             var form = $('#page-filter');
             var actionUrl = form.attr('action');
             page++;
@@ -360,28 +409,82 @@
                 data: form.serialize(),
                 success: function(data)
                 {
-                    console.log(data);
                     if(data.cnt > 0){
                         $('#building_list').append(data.html);
-
-                        cnt_rendered(data.cnt);
-                    } else {
-                        hide_loadmore();
                     }
+
+                    cnt_rendered(data.cnt, true);
                 }
             });
         });
+
     });
 
-    function hide_loadmore(){
-        $('.show-more').hide();
-    }
 
-    function cnt_rendered(cnt = 0){
+    function cnt_rendered(cnt = 0, resumm = false){
         var old_cnt = parseInt($('#cnt_rendered').text());
         var new_cnt = parseInt(cnt);
+        var final_cnt;
+        var on_page = 12;
 
-        $('#cnt_rendered').text(old_cnt + new_cnt);
+        if(resumm){
+            final_cnt = old_cnt + new_cnt;
+        } else {
+            final_cnt = new_cnt;
+        }
+
+        $('#cnt_rendered').text(final_cnt);
+
+        if(new_cnt < on_page){
+            $('.show-more').hide();
+        } else {
+            $('.show-more').show();
+        }
+
+        if(final_cnt > 0){
+            if( $('.building_block .no_buildings').length > 0 ){
+                $('.building_block .no_buildings').remove();
+            }
+
+            $('#building_list').show();
+
+        } else {
+            if( $('.building_block .no_buildings').length == 0 ){
+                $('.building_block').append('<div class="no_buildings alert alert-warning">Отсутствует недвижимость по выбранным фильтрам.</div>');
+            }
+
+            $('#building_list').hide();
+        }
+    }
+
+    function reset_filter(){
+        // Близость к метро
+        $('#proximity input[type=checkbox]').each(function(){
+            if($(this).val() != 0){
+                $(this).prop("checked", true);
+            }
+        });
+
+        // Срок сдачи
+        $('.deadline input[value=all]').prop("checked", true);
+
+        // Класс жилья
+        $('#housing li input').each(function(){
+            $(this).prop("checked", true);
+        });
+
+        // основные опции
+        $('ul.general li input').each(function(){
+            $(this).prop("checked", false);
+        });
+
+        // доп опции
+        $('ul.additional li input').each(function(){
+            $(this).prop("checked", false);
+        });
+
+        // сервис 0%
+        $('#service').prop("checked", false);
     }
 </script>
 @endsection
