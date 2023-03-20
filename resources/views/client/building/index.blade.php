@@ -10,24 +10,6 @@
 
                     Новостройки
                 </nav>
-                <div class="page-top__switchers">
-                    <div class="container">
-                        <div class="row">
-                            <div class="page-top__switchers-inner">
-                                <a href="#" class="page-top__filter">
-                                    <span class="icon-filter"></span>
-                                    Фильтры
-                                </a>
-                                <a href="#" data-tab-name="loop" class="page-top__switcher tab-nav active">
-                                    <span class="icon-grid"></span>
-                                </a>
-                                <a href="#" data-tab-name="map" class="page-top__switcher tab-nav">
-                                    <span class="icon-marker"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
 
@@ -102,9 +84,6 @@
                                 Отсутствуют недвижимость по выбранным фильтрам.
                             </div>
                         @endif
-                    </div>
-                    <div class="page-map tab-content map">
-                        <h1>Тут будет карта</h1>
                     </div>
                 </div>
 
